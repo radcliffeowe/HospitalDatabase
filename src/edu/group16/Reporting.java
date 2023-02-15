@@ -1,7 +1,8 @@
 package edu.group16;
 
 import edu.group16.database.DatabaseManager;
-import edu.group16.database.patient.PatientDAO;
+import edu.group16.database.DoctorDAO;
+import edu.group16.database.PatientDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,7 @@ public class Reporting {
         DatabaseManager.initialize(username, password);
 
         PatientDAO patientDAO = new PatientDAO();
+        DoctorDAO doctorDAO = new DoctorDAO();
 
         if(args.length > 2){
 
@@ -40,6 +42,15 @@ public class Reporting {
                     }
                     break;
                 case "2":
+                    System.out.print("Enter Doctor ID: ");
+                    int doctorId = userInput.nextInt();
+                    try {
+                        ResultSet doctorInfo = doctorDAO.get(doctorId);
+                        doctorDAO.report(doctorInfo);
+                        doctorInfo.close();
+                    }catch(SQLException e){
+                        System.out.println("Query failed");
+                    }
                     break;
                 case "3":
                     break;

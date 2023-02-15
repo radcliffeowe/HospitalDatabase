@@ -1,4 +1,4 @@
-package edu.group16.database.patient;
+package edu.group16.database;
 
 import edu.group16.database.DatabaseManager;
 
@@ -6,18 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PatientDAO {
-
-    public void add(Patient patient){
-
-    }
-
-    public void delete(Patient patient){
-
-    }
-
-    public void update(Patient patient){
-
-    }
 
     public ResultSet get(int ssn) throws SQLException {
         String query = "Select * from Patient where ssn = " + ssn;
