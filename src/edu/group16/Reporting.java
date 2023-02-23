@@ -1,5 +1,6 @@
 package edu.group16;
 
+import edu.group16.database.AdmissionDAO;
 import edu.group16.database.DatabaseManager;
 import edu.group16.database.DoctorDAO;
 import edu.group16.database.PatientDAO;
@@ -26,6 +27,7 @@ public class Reporting {
 
         PatientDAO patientDAO = new PatientDAO();
         DoctorDAO doctorDAO = new DoctorDAO();
+        AdmissionDAO admissionDAO = new AdmissionDAO();
 
         if(args.length > 2){
 
@@ -55,6 +57,16 @@ public class Reporting {
                 case "3":
                     break;
                 case "4":
+                    System.out.println("Enter Admission Number: ");
+                    int aNumber = userInput.nextInt();
+                    System.out.println("Enter the new total payment: ");
+                    double newPayment = userInput.nextDouble();
+                    String updateStatement = String.format("Update Admission set totalPayment = " + newPayment + "where visitCode = " + aNumber);
+                    try {
+                        DatabaseManager.getInstance().runUpdate(updateStatement);
+                    } catch (SQLException e) {
+                        System.out.println("Update failed");
+                    }
                     break;
                 default:
                     break;

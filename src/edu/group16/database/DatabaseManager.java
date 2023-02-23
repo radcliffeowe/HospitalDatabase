@@ -52,4 +52,32 @@ public class DatabaseManager {
         stm.close();
         return null;
     }
+
+    public void runUpdate(String statement) throws SQLException {
+        Statement stm = dbConnection.createStatement();
+        try{
+            stm.executeUpdate(statement);
+        } catch(SQLException e){
+            System.out.println("Update failed");
+        }
+        stm.close();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
