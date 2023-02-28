@@ -13,9 +13,6 @@ public class Reporting {
 
     public static void main(String[] args) {
 
-        String username = args[0]; //Oracle username
-        String password = args[1]; //Oracle password
-
         System.out.println("1- Report Patients Basic Information");
         System.out.println("2- Report Doctors Basic Information");
         System.out.println("3- Report Admissions Information");
@@ -23,15 +20,15 @@ public class Reporting {
 
         Scanner userInput = new Scanner(System.in);
 
-        DatabaseManager.initialize(username, password);
+        DatabaseManager dbManager = DatabaseManager.getInstance();
 
         PatientDAO patientDAO = new PatientDAO();
         DoctorDAO doctorDAO = new DoctorDAO();
         AdmissionDAO admissionDAO = new AdmissionDAO();
 
-        if(args.length > 2){
+        if(args.length != 0){
 
-            switch(args[2]){
+            switch(args[0]){
                 case "1":
                     System.out.print("Enter Patient SSN: ");
                     int ssn = userInput.nextInt();
@@ -55,6 +52,13 @@ public class Reporting {
                     }
                     break;
                 case "3":
+                    System.out.println("Enter Admission Number: ");
+                    int visitCode = userInput.nextInt();
+                    try{
+                        admissionDAO.report(visitCode);
+                    }catch(SQLException e){
+                        System.out.println("Admission Report failed");
+                    }
                     break;
                 case "4":
                     System.out.println("Enter Admission Number: ");

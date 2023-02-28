@@ -9,15 +9,16 @@ public class DatabaseManager {
 
     private static DatabaseManager databaseManager;
 
-    public DatabaseManager(String username, String password){
-        dbConnection = connectDatabase(username, password);
+    public DatabaseManager(){
+
+        dbConnection = connectDatabase();
     }
 
-    public static void initialize(String username, String password){
-        databaseManager = new DatabaseManager(username, password);
-    }
 
     public static DatabaseManager getInstance(){
+        if(databaseManager == null){
+            databaseManager = new DatabaseManager();
+        }
         return databaseManager;
     }
 
@@ -25,7 +26,7 @@ public class DatabaseManager {
         dbConnection.close();
     }
 
-    private Connection connectDatabase(String username, String password) {
+    private Connection connectDatabase() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e){
@@ -34,7 +35,7 @@ public class DatabaseManager {
         }
         Connection tempConn = null;
         try{
-            tempConn = DriverManager.getConnection(dbUrl, username, password);
+            tempConn = DriverManager.getConnection(dbUrl, System.getenv("USERNAME"), System.getenv("PASSWORD"));
         } catch (SQLException e){
             System.out.println("Database Connection failed");
             System.exit(1);
